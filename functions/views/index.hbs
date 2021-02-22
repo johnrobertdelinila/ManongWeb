@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/web_ic_manong_transparent.png">
+    <title>One Tap Manong</title>
+
+    <!-- update the version number as needed -->
+    <!-- initialize the SDK after all desired features are loaded -->
+    <!-- include only the Firebase features as you need -->
+
+    <script defer src="/__/firebase/5.0.4/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.0.4/firebase-storage.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/normalize.min.css">
+    <link rel="stylesheet" href="stylesheets/roboto_style.css">
+    <style rel="stylesheet">
+      .mdc-snackbar { transform: translateY(100%); }
+    </style>
+    <link rel="stylesheet" href="dist/bundle.css">
+
+    <!-- Material Design Datatable CSS -->
+    <link rel="stylesheet" type="text/css" href="stylesheets/dataTables.material.min.css">
+    <link rel="stylesheet" href="stylesheets/material.deep_orange-green.min.css" />
+
+  </head>
+
+  <body class="manong-login">
+
+    <div id="progress_bar" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+
+    <section class="header">
+      <img src="images/manong_customer_logo.png" class="manong_logo" width="178" height="178">
+      <h1>ONE TAP MANONG</h1>
+      <h6 class="manong-title-administrator" style="margin-top: -20px;">Administrator</h6>
+    </section>
+
+    <form id="login_form">
+      <div class="mdc-text-field mdc-text-field--box username">
+        <input type="email" class="mdc-text-field__input" id="username-input" name="username" required>
+        <label class="mdc-floating-label" for="username-input">Admin email</label>
+        <div class="mdc-line-ripple"></div>
+      </div>
+
+      <div class="mdc-text-field mdc-text-field--box password">
+        <input type="password" name="password" class="mdc-text-field__input" id="password-input" required minlength="6">
+        <label class="mdc-floating-label" for="password-input">Password</label>
+        <div class="mdc-line-ripple"></div>
+      </div>
+
+      <div class="button-container">
+        <div class="mdc-shape-container my-shape-container">
+          <button class="mdc-button mdc-button--raised next">LOGIN</button>
+          <div class="mdc-shape-container__corner mdc-shape-container__corner--top-left"></div>
+          <div class="mdc-shape-container__corner mdc-shape-container__corner--top-right"></div>
+          <div class="mdc-shape-container__corner mdc-shape-container__corner--bottom-right"></div>
+          <div class="mdc-shape-container__corner mdc-shape-container__corner--bottom-left"></div>
+        </div>
+        <div id="spinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin-right: 16px;"></div>
+      </div>
+    </form>
+
+    <div class="mdc-snackbar"
+         aria-live="assertive"
+         aria-atomic="true"
+         aria-hidden="true">
+      <div class="mdc-snackbar__text"></div>
+      <div class="mdc-snackbar__action-wrapper">
+        <button type="button" class="mdc-snackbar__action-button"></button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          console.log('Firebase SDK loaded with ' + features.join(', '));
+          // document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    </script>
+    <script src="dist/bundle.js" async></script>
+  </body>
+</html>

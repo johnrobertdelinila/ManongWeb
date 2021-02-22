@@ -1,0 +1,477 @@
+
+
+$mdc-theme-primary: #B9E4C9; // Color Accent
+$mdc-theme-on-primary: #2C574B; // Text Color Primary
+$mdc-theme-secondary: #FD5523; // Color Control Activated
+$mdc-theme-on-secondary: $mdc-theme-on-primary; 
+$mdc-theme-surface: #FAFAFA; // Service Background Color
+$mdc-theme-on-surface: $mdc-theme-on-primary; 
+$mdc-theme-background: #FFFFFF; // Login Page Background Color
+$mdc-theme-on-background: $mdc-theme-on-primary; 
+$mdc-theme-primary-dark: #37966F; // Color Primary Dark
+
+$background-color: $mdc-theme-background;
+$color: $mdc-theme-on-background;
+
+$mdc-typography-font-family: "Roboto";
+
+@import "@material/textfield/mdc-text-field";
+@import "@material/button/mdc-button";
+@import "@material/drawer/mdc-drawer";
+@import "@material/list/mdc-list";
+@import "@material/image-list/mdc-image-list";
+@import "@material/typography/mdc-typography";
+@import "@material/elevation/mdc-elevation";
+@import "@material/shape/mixins";
+@import "@material/shape/functions";
+@import "@material/shape/mdc-shape";
+@import "@material/snackbar/mdc-snackbar";
+@import "@material/dialog/mdc-dialog";
+@import "@material/layout-grid/mdc-layout-grid";
+@import "@material/card/mdc-card";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: $mdc-typography-font-family;
+  margin: 0;
+  padding-top: 0.1px; // Prevent header h1 margin from pushing body down
+  overflow: auto;
+}
+
+.image {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.title {
+  color: $mdc-theme-on-primary;
+}
+
+.image:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 500px;
+}
+
+.my-card {
+  height: 350px;
+  width: 350px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+.dashboard {
+  color: $mdc-theme-on-primary;
+}
+
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile_img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.review_container {
+  display:flex;
+}
+
+.fixed{
+    width: 70px;
+}
+
+.flex-item{
+    flex-grow: 1;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+#caption {
+  @include mdc-typography(headline4);
+}
+
+.mdc-card {
+  @include mdc-card-fill-color(#FFFFFF);
+  border-radius: 0px;
+}
+
+// Login page styles
+.manong-login {
+  background-color: $mdc-theme-background;
+  color: $mdc-theme-on-background;
+}
+
+.manong_logo {
+  margin-bottom: -15px;
+}
+
+#progress_bar {
+  width: 100%; 
+  visibility: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+#spinner {
+  display: none;
+}
+
+.next {
+  @include mdc-button-container-fill-color($mdc-theme-secondary);
+  @include mdc-button-ink-color($mdc-theme-background);
+}
+
+.my-shape-container {
+  @include mdc-shape-angled-corner(#fff, 11px);
+}
+
+.mdc-shape-container {
+  display: inline-block;
+  position: relative;
+  overflow: hidden; // Prevent overflowed borders from encroaching on surrounding elements
+}
+
+.mdc-shape-container__corner {
+  position: absolute;
+  // IE and Edge require z-index set to 1 to properly mask ripple.
+  z-index: 1;
+}
+
+.mdc-shape-container__corner::before,
+.mdc-shape-container__corner::after {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  content: "";
+}
+.mdc-shape-container__corner--top-left {
+  transform: rotate(-45deg);
+}
+.mdc-shape-container__corner--top-right {
+  transform: rotate(45deg);
+}
+.mdc-shape-container__corner--bottom-right {
+  transform: rotate(135deg);
+}
+.mdc-shape-container__corner--bottom-left {
+  transform: rotate(-135deg);
+}
+
+.username, .password {
+  @include mdc-text-field-hover-bottom-line-color(on-primary);
+  @include mdc-text-field-ink-color(#000000);
+  @include mdc-text-field-line-ripple-color($mdc-theme-primary-dark);
+  @include mdc-text-field-box-corner-radius(0);
+  display: block;
+  width: 300px;
+  margin: 20px auto;
+    &:not(.mdc-text-field--invalid) {
+      @include mdc-text-field-label-color(on-primary);
+    }
+    &.mdc-text-field--focused:not(.mdc-text-field--invalid) {
+      @include mdc-text-field-label-color(on-primary);
+    }
+}
+
+.service-name {
+  // @include mdc-text-field-hover-bottom-line-color(on-primary);
+  @include mdc-text-field-ink-color(#000000);
+  @include mdc-text-field-line-ripple-color($mdc-theme-primary-dark);
+  width: 300px;
+  margin: 20px auto;
+    &:not(.mdc-text-field--invalid) {
+      @include mdc-text-field-label-color(on-primary);
+    }
+    &.mdc-text-field--focused:not(.mdc-text-field--invalid) {
+      @include mdc-text-field-label-color(on-primary);
+    }
+}
+
+.service-title, .service-question {
+  @include mdc-text-field-hover-bottom-line-color(on-primary);
+  @include mdc-text-field-ink-color(#000000);
+  @include mdc-text-field-line-ripple-color($mdc-theme-primary-dark);
+  @include mdc-text-field-box-corner-radius(0);
+  width: 300px;
+  margin: 10px auto;
+    &:not(.mdc-text-field--invalid) {
+      @include mdc-text-field-label-color(on-primary);
+    }
+    &.mdc-text-field--focused:not(.mdc-text-field--invalid) {
+      @include mdc-text-field-label-color(on-primary);
+    }
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 300px;
+  margin: auto;
+}
+
+.button-container button, #spinner {
+  margin: 3px;
+}
+
+.header {
+  text-align: center;  
+}
+
+.manong-logo {
+  width: 120px;
+  height: 120px;
+  padding-top: 80px;
+  fill: currentColor;
+}
+
+// Home page styles
+.home {
+  display: flex; // Flexbox is used to easily arrange the persistent drawer and content side-by-side
+  background-color: #FAFAFA;
+}
+
+.manong-logo-drawer {
+  width: 78px;
+  padding: 40px 0 0;
+  margin: 0 auto;
+  fill: currentColor;
+}
+
+.manong-title {
+  @include mdc-typography(headline4);
+  align-self: center;
+  margin: 5px auto;
+}
+
+.manong-title-administrator {
+  @include mdc-typography(headline6);
+  align-self: center;
+  margin: 5px auto;
+}
+
+.manong-title-home {
+  @include mdc-typography(body1);
+  align-self: center;
+  margin: 5px auto;
+}
+
+.manong-drawer {
+  @include mdc-drawer-fill-color-accessible(primary);
+  @include mdc-drawer-ink-color(on-primary);
+  border-right-width: 0;
+
+  text-transform: uppercase;
+
+  .mdc-list {
+    margin: 70px 5px auto 5px;
+  }
+
+  .mdc-list-item {
+    @include mdc-list-item-primary-text-ink-color(on-primary);
+
+    border-radius: 6px;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+}
+
+.manong-select-item-divider {
+  border-bottom-color: $mdc-theme-secondary;
+
+  width: 50px;
+  margin: 0 auto;
+  border-bottom-width: 2px;
+  position: relative;
+  top: -5px;
+}
+
+.manong-body {
+  @include mdc-elevation(8);   
+
+  display: block;
+  overflow: auto;
+  height: 100%;
+  width: 1000%;
+}
+
+.lottie_text {
+  width: 100px;
+  height: 100px;
+}
+
+.lottie_action {
+  width: 85px;
+  height: 85px;
+}
+
+.lottie_table {
+  width: 150px;
+  height: 150px;
+}
+
+.lottie_image {
+  width: 100px;
+  height: 100px;
+  background: #E1E6EA;
+}
+
+// Table
+.action {
+  @include mdc-button-ink-color(on-primary);
+  @include mdc-button-outline-color(on-primary);
+  font-weight: bold;
+}
+
+.dialog_button {
+  @include mdc-button-ink-color($mdc-theme-secondary);
+}
+
+.credential_image {
+  margin: 8px;
+}
+
+.mdc-dialog__header__title {
+  color: black;
+}
+
+.mdc-dialog__body {
+  color: $mdc-theme-on-primary;
+}
+
+table thead th {
+  color: $mdc-theme-primary-dark !important;
+  font-size: 14px !important;
+}
+
+.material-icons {
+  color: $mdc-theme-on-primary;
+}
+
+.material-icons:hover, .material-icons:focus {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.material-icons {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.demo-card-image.mdl-card {
+  width: 256px;
+  height: 256px;
+}
+.demo-card-image > .mdl-card__actions {
+  height: 52px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.demo-card-image__filename {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 5000;
+}
+#view-source {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 900;
+}
+
+.answer_container {
+  margin-left: 24px;
+}
+
+.effect1{
+    -webkit-box-shadow: 0 1px 6px -2px #777;
+       -moz-box-shadow: 0 1px 6px -2px #777;
+            box-shadow: 0 1px 6px -2px #777;
+}
+
+.add_answer {
+  color: $mdc-theme-on-primary !important;
+  margin-left: 24px !important;
+}
+
+.delete_question {
+  color: red !important;
+}

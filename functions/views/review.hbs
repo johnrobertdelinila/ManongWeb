@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/web_ic_manong_transparent.png">
+    <title>One Tap Manong</title>
+
+    <!-- update the version number as needed -->
+    <!-- initialize the SDK after all desired features are loaded -->
+    <!-- include only the Firebase features as you need -->
+
+    <script defer src="/__/firebase/5.5.8/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-storage.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-functions.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://storage.googleapis.com/non-spec-apps/mio-icons/latest/sharp.css">
+
+    <link rel="stylesheet" href="stylesheets/normalize.min.css">
+    <link rel="stylesheet" href="stylesheets/roboto_style.css">
+    <style rel="stylesheet">
+      .mdc-snackbar { transform: translateY(100%); }
+    </style>
+    <link rel="stylesheet" href="dist/bundle.css">
+
+    <!-- Material Design Datatable CSS -->
+    <link rel="stylesheet" type="text/css" href="stylesheets/dataTables.material.min.css">
+    <link rel="stylesheet" href="stylesheets/material.deep_orange-green.min.css" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          console.log('Firebase SDK loaded with ' + features.join(', '));
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    </script>
+    <script src="dist/reviewBundle.js" async></script>
+
+  </head>
+
+  <body class="home">
+
+    <nav class="manong-drawer mdc-drawer mdc-drawer--permanent">
+      <img src="images/manong_customer_logo.png" class="manong-logo-drawer">
+      <h1 class="manong-title">ONE TAP</h1>
+      <h1 class="manong-title" style="margin-top: -15px;">MANONG</h1>
+      <h6 class="manong-title-home" style="margin-top: -5px;">Administrator</h6>
+      <div class="mdc-drawer__content">
+        <nav class="mdc-list">
+          <a href="/home" class="mdc-list-item">Dashboard</a>
+          <a href="/customer" class="mdc-list-item">Customers</a>
+          <a href="/provider" class="mdc-list-item">Service Providers</a>
+          <a href="/pending" class="mdc-list-item">Pending Providers</a>
+          <a href="/earning" class="mdc-list-item">Earnings</a>
+          <a href="#" class="mdc-list-item">Reviews</a>
+          <li class="manong-select-item-divider mdc-list-divider" role="separator"></li>
+          <a href="#" class="mdc-list-item" id="logout">Logout</a>
+        </nav>
+      </div>
+    </nav>
+
+    <div class="manong-body">
+      
+      <br>
+      <h6 class="mdc-typography--headline4 title" style="margin-left: 16px;">One Tap Manong Review</h6>
+      <br>
+
+      <div class="mdc-card" style="margin-left: 125px; margin-right: 125px; overflow-y: scroll; height:500px; padding: 28px;">
+<!--         <div class="mdc-card__media mdc-card__media--square">
+          <div class="mdc-card__media-content"></div>
+        </div> -->
+        <!-- ... content ... -->
+        <h6 class="card_container" id="reviews">
+          
+        </h6>
+        <div class="mdc-card__actions">
+          
+        </div>
+      </div>
+
+      <!-- <table id="customer_table" class="mdl-data-table" style="width:100%;">
+        <thead>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Rating</th>
+          <th>Cancellations</th>
+          <th>View</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <tr class="loading_row">
+            <td colspan="7"><center><div id="loading_table" class="lottie_table"></div></center></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+          </tr>
+        </tbody>
+      </table> -->
+
+    </div>
+
+    <!-- FORBIDDEN JUTSU -->
+
+    <aside id="my-mdc-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="my-mdc-dialog-label" aria-describedby="my-mdc-dialog-description">
+      <div class="mdc-dialog__surface" style="width: 300px;">
+        <header class="mdc-dialog__header">
+          <h1 id="my-mdc-dialog-label" class="mdc-dialog__header__title">
+            Logout Dialog
+          </h1>
+        </header>
+        <section id="my-mdc-dialog-description" class="mdc-dialog__body">
+          Are you sure to disable this user?
+        </section>
+        <footer class="mdc-dialog__footer">
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel dialog_button">Cancel</button>
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept dialog_button">Okay</button>
+        </footer>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <aside id="logout-mdc-dialog" class="mdc-dialog">
+      <div class="mdc-dialog__surface" style="width: 300px;">
+        <header class="mdc-dialog__header">
+          <h1 class="mdc-dialog__header__title">
+            Alert Dialog
+          </h1>
+        </header>
+        <section class="mdc-dialog__body">
+          Are your sure, to logout?
+        </section>
+        <footer class="mdc-dialog__footer">
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel dialog_button">Cancel</button>
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept dialog_button">Okay</button>
+        </footer>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <aside id="concerns-mdc-dialog" class="mdc-dialog">
+      <div class="mdc-dialog__surface" style="width: 300px;">
+        <header class="mdc-dialog__header">
+          <h1 class="mdc-dialog__header__title" id="concern_title">
+            Concerns
+          </h1>
+        </header>
+        <section class="mdc-dialog__body">
+          <h6 class="mdc-typography--body1 title" id="concerns" style="overflow-y: scroll; height:400px;"></h6>
+        </section>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <aside id="review-mdc-dialog" class="mdc-dialog">
+      <div class="mdc-dialog__surface" style="width: 300px;">
+        <header class="mdc-dialog__header">
+          <h1 class="mdc-dialog__header__title" id="review_title">
+            Review
+          </h1>
+        </header>
+        <section class="mdc-dialog__body">
+          <h6 class="mdc-typography--body1 title" id="reviews" style="overflow-y: scroll; height:400px;"></h6>
+        </section>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <div class="mdc-snackbar"
+         aria-live="assertive"
+         aria-atomic="true"
+         aria-hidden="true">
+      <div class="mdc-snackbar__text"></div>
+      <div class="mdc-snackbar__action-wrapper">
+        <button type="button" class="mdc-snackbar__action-button"></button>
+      </div>
+    </div>
+
+    <!-- The Modal Image-->
+    <div id="myModal" class="modal">
+      <span class="close" id="close_haha">&times;</span>
+      <img class="modal-content" id="img01">
+      <div id="caption"></div>
+    </div>
+
+    <input type="hidden" id="hidden_customer_id">
+    <input type="hidden" id="hidden_is_disable">
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/web_ic_manong_transparent.png">
+    <title>One Tap Manong</title>
+
+    <!-- update the version number as needed -->
+    <!-- initialize the SDK after all desired features are loaded -->
+    <!-- include only the Firebase features as you need -->
+    <!-- 5.0.4 -->
+    <script defer src="/__/firebase/5.5.8/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-storage.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-functions.js"></script>
+    <script defer src="/__/firebase/5.5.8/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="stylesheets/normalize.min.css">
+    <link rel="stylesheet" href="stylesheets/roboto_style.css">
+    <style rel="stylesheet">
+      .mdc-snackbar { transform: translateY(100%); }
+    </style>
+    <link rel="stylesheet" href="dist/bundle.css">
+
+    <!-- Material Design Datatable CSS -->
+    <link rel="stylesheet" type="text/css" href="stylesheets/dataTables.material.min.css">
+    <link rel="stylesheet" href="stylesheets/material.deep_orange-green.min.css" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          console.log('Firebase SDK loaded with ' + features.join(', '));
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    </script>
+    <script src="dist/homeBundle.js" async></script>
+
+  </head>
+
+  <body class="home">
+
+    <nav class="manong-drawer mdc-drawer mdc-drawer--permanent">
+      <img src="images/manong_customer_logo.png" class="manong-logo-drawer">
+      <h1 class="manong-title">ONE TAP</h1>
+      <h1 class="manong-title" style="margin-top: -15px;">MANONG</h1>
+      <h6 class="manong-title-home" style="margin-top: -5px;">Administrator</h6>
+      <div class="mdc-drawer__content">
+        <nav class="mdc-list">
+          <a href="#" class="mdc-list-item">Dashboard</a>
+          <li class="manong-select-item-divider mdc-list-divider" role="separator"></li>
+          <a href="/customer" class="mdc-list-item">Customers</a>
+          <a href="/provider" class="mdc-list-item">Service Providers</a>
+          <a href="/pending" class="mdc-list-item">Pending Providers</a>
+          <a href="/earning" class="mdc-list-item">Earnings</a>
+          <a href="/review" class="mdc-list-item">Reviews</a>
+          <a href="#" class="mdc-list-item" id="logout">Logout</a>
+        </nav>
+      </div>
+    </nav>
+
+    <div class="manong-body">
+
+      <div id="progress_bar" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+      
+      <div style="padding: 48px;">
+
+        <h3 class="mdc-typography--headline3">One Tap Manong Services</h3>
+
+        <center>
+        <div class="mdl-grid" id="service_container"></div>
+        </center>
+
+        <center><div id="loading_review" class="lottie_table"></center>
+
+        <br><br>
+        <h3 class="mdc-typography--headline3">Analytics</h3>
+        
+        <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+
+            <div class="mdc-layout-grid__cell">
+
+              <div class="mdc-card">
+                <div class="mdc-card__media--16-9">
+                  <center>
+                    <p class="mdc-typography mdc-typography--headline6 dashboard" id="customers">
+                      Fetching Customers...
+                    </p>
+                  </center>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mdc-layout-grid__cell">
+              
+              <div class="mdc-card">
+                <div class="mdc-card__media--16-9">
+                  <center>
+                    <p class="mdc-typography mdc-typography--headline6 dashboard" id="providers">
+                      Fetching Registered Providers...
+                    </p>
+                  </center>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mdc-layout-grid__cell">
+              
+              <div class="mdc-card">
+                <div class="mdc-card__media--16-9">
+                  <center>
+                    <p class="mdc-typography mdc-typography--headline6 dashboard" id="completed">
+                      Fetching Completed Jobs...
+                    </p>
+                  </center>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="chart-container mdc-card" style="margin-left: 25px; margin-right: 25px;">
+          <canvas id="myChart"></canvas>  
+        </div>
+
+      </div>
+      <br><br><br>
+
+    </div>
+
+    <button id="view-source" class="mdc-button mdc-button--raised next">ADD SERVICE</button>
+
+    <aside id="logout-mdc-dialog" class="mdc-dialog">
+      <div class="mdc-dialog__surface" style="width: 300px;">
+        <header class="mdc-dialog__header">
+          <h1 class="mdc-dialog__header__title">
+            Logout Dialog
+          </h1>
+        </header>
+        <section class="mdc-dialog__body">
+          Are your sure, to logout?
+        </section>
+        <footer class="mdc-dialog__footer">
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel dialog_button">Cancel</button>
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept dialog_button">Okay</button>
+        </footer>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+    <aside id="service-mdc-dialog" class="mdc-dialog">
+      <div class="mdc-dialog__surface" style="width: 800px;">
+        <header class="mdc-dialog__header effect1">
+          <h4 class="mdc-dialog__header__title mdc-typography--headline4" style="padding-bottom: 10px;">
+            <span style="font-size: 22px !important;">Checklist for <span id="text_service_name">New Service</span></span> <br><br>
+            <button style="margin-left: 24px;" id="add_question" class="mdl-button mdl-js-button mdl-js-ripple-effect">ADD QUESTION</button>
+            <button style="visibility: hidden;" class="mdl-button mdl-js-button mdl-js-ripple-effect">ADD DESCRIPTION</button>  
+            <button id="add_description" class="mdl-button mdl-js-button mdl-js-ripple-effect">ADD DESCRIPTION</button> 
+            <button id="add_attachment" class="mdl-button mdl-js-button mdl-js-ripple-effect">ADD ATTACHMENTS</button>
+          </h4>
+        </header>
+        <form id="form_checklist">
+        <section class="mdc-dialog__body" id="service_service" style="overflow-y: scroll; height:450px;">
+          <div id="service_body">
+
+            <div class="mdc-text-field mdc-text-field--outlined service-name">
+              <input type="text" id="service_name" class="mdc-text-field__input" required>
+              <label for="service_name" class="mdc-floating-label">Name of the Service</label>
+              <div class="mdc-notched-outline">
+                <svg>
+                  <path class="mdc-notched-outline__path"/>
+                </svg>
+              </div>
+              <div class="mdc-notched-outline__idle"></div>
+            </div>
+
+            <div style="margin-left: 24px;">
+              <h6 class="mdc-typography--headline6">Image of Service</h6>
+              <img id="service_image" src="images/no_image.jpg" class="images" width="140" height="140" alt="service image" />
+              <input type='file' id="file" accept="image/*" required /><br><br>
+            </div><br>
+
+            <div id="dialog_service_container" style="margin-left: 24px;"></div>
+
+          </div>
+        </section>
+        <footer class="mdc-dialog__footer">
+          <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel dialog_button">Cancel</button>
+          <button type="submit" id="submit_checklist" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--any dialog_button">Submit</button>
+        </footer>
+        </form>
+      </div>
+      <div class="mdc-dialog__backdrop"></div>
+    </aside>
+
+
+  </body>
+</html>
